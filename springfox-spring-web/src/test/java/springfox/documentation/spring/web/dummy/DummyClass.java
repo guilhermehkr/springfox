@@ -347,6 +347,15 @@ public class DummyClass {
     }
   }
 
+  @ApiImplicitParams({
+          @ApiImplicitParam(name = "common-header", dataType = "string", required = true, paramType = "header")
+  })
+  public class ApiImplicitParamsAllowMultipleClass implements ApiImplicitParamsInterface {
+    @Override
+    public void methodWithApiImplicitParam() {
+    }
+  }
+
   @ResponseBody
   public DummyModels.BusinessModel methodWithConcreteResponseBody() {
     return null;
@@ -487,6 +496,22 @@ public class DummyClass {
   @ResponseBody
   @JsonView(Views.SecondView.class)
   public PetWithJsonView methodToTestJsonView(@RequestBody @JsonView(Views.FirstView.class) PetWithJsonView pet) {
+    throw new UnsupportedOperationException();
+  }
+
+  @ResponseBody
+  public List<DummyModels.BusinessModel> methodToTestOrdering(@RequestBody SameFancyPet fancyPet) {
+    throw new UnsupportedOperationException();
+  }
+
+  @ResponseBody
+  public List<DummyModels.BusinessModel> methodToTestOrdering(@RequestBody SameFancyPet fancyPet,
+      @RequestParam String id) {
+    throw new UnsupportedOperationException();
+  }
+
+  @ResponseBody
+  public List<DummyModels.BusinessModel> methodToTestOrdering(@RequestParam String id) {
     throw new UnsupportedOperationException();
   }
 

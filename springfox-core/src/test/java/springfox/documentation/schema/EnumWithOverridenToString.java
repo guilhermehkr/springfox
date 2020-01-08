@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright 2015 the original author or authors.
+ *  Copyright 2019 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,9 +16,21 @@
  *
  *
  */
+
 package springfox.documentation.schema;
 
-import org.springframework.hateoas.ResourceSupport;
+public enum EnumWithOverridenToString {
+    ONE("one-string"),
+    TWO("two-string");
 
-public class SubclassOfResourceSupport extends ResourceSupport {
+    private final String customName;
+
+    EnumWithOverridenToString(String customName) {
+        this.customName = customName;
+    }
+
+    @Override
+    public String toString() {
+        return customName;
+    }
 }

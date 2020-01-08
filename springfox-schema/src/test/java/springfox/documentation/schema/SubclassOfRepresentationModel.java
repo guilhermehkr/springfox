@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright 2016 the original author or authors.
+ *  Copyright 2015 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,26 +18,7 @@
  */
 package springfox.documentation.schema;
 
-/**
- *
- * A real life example of this would be org.springframework.http.HttpStatus
- *
- * @author Alexandru-Constantin Bledea
- * @since Sep 12, 2016
- */
-public enum DuplicateRepresentationEnum {
+import org.springframework.hateoas.RepresentationModel;
 
-  ONE,
-  TWO,
-
-  @Deprecated
-  one,
-  @Deprecated
-  two;
-
-  @Override
-  public String toString() {
-    return name().toLowerCase();
-  }
-
+public class SubclassOfRepresentationModel extends RepresentationModel {
 }

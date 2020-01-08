@@ -43,7 +43,7 @@
                         "description": "toCreate",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ModelWithSameNameClasses"
+                            "$ref": "#/definitions/ModelWithSameNameClasses_1"
                         }
                     }
                 ],
@@ -75,7 +75,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ModelWithSameNameClasses_1"
+                            "$ref": "#/definitions/ModelWithSameNameClasses"
                         }
                     },
                     "405": {
@@ -281,7 +281,7 @@
                     "type": "string"
                 }
             },
-            "title": "SameCategory"
+            "title": "SameCategory_1"
         },
         "SameCategory_1": {
             "type": "object",

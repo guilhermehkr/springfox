@@ -42,14 +42,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.Optional.*;
-
 @Component
 public class SchemaPluginsManager {
   private final PluginRegistry<ModelPropertyBuilderPlugin, DocumentationType> propertyEnrichers;
   private final PluginRegistry<ModelBuilderPlugin, DocumentationType> modelEnrichers;
   private final PluginRegistry<ViewProviderPlugin, DocumentationType> viewProviders;
-    private final PluginRegistry<SyntheticModelProviderPlugin, ModelContext> syntheticModelProviders;
+  private final PluginRegistry<SyntheticModelProviderPlugin, ModelContext> syntheticModelProviders;
 
   @Autowired
   public SchemaPluginsManager(
@@ -89,42 +87,35 @@ public class SchemaPluginsManager {
   }
 
   public ViewProviderPlugin viewProvider(DocumentationType documentationType) {
-    return viewProviders.getPluginFor(documentationType);
+    return viewProviders.getPluginFor(documentationType)
+        .orElseThrow(() -> new IllegalStateException("No ViewProviderPlugin for " + documentationType.getName()));
   }
 
   public Optional<Model> syntheticModel(ModelContext context) {
-    if (syntheticModelProviders.hasPluginFor(context)) {
-      return of(syntheticModelProviders.getPluginFor(context).create(context));
-    }
-    return empty();
+      return syntheticModelProviders.getPluginFor(context).map(plugin -> plugin.create(context));
   }
 
   public Optional<ModelSpecification> syntheticModelSpecification(ModelContext context) {
-    if (syntheticModelProviders.hasPluginFor(context)) {
-      return of(syntheticModelProviders.getPluginFor(context).createModelSpecification(context));
-    }
-    return empty();
+      return syntheticModelProviders.getPluginFor(context)
+          .map(p -> p.createModelSpecification(context));
   }
 
   public List<ModelProperty> syntheticProperties(ModelContext context) {
-    if (syntheticModelProviders.hasPluginFor(context)) {
-      return syntheticModelProviders.getPluginFor(context).properties(context);
-    }
-    return new ArrayList<>();
+      return syntheticModelProviders.getPluginFor(context)
+          .map(p -> p.properties(context))
+          .orElse(new ArrayList<>());
   }
 
   public Set<ResolvedType> dependencies(ModelContext context) {
-    if (syntheticModelProviders.hasPluginFor(context)) {
-      return syntheticModelProviders.getPluginFor(context).dependencies(context);
-    }
-    return new HashSet<>();
+      return syntheticModelProviders.getPluginFor(context)
+          .map(p -> p.dependencies(context))
+          .orElse(new HashSet<>());
   }
 
   public List<PropertySpecification> syntheticPropertySpecifications(ModelContext context) {
-    if (syntheticModelProviders.hasPluginFor(context)) {
-      return syntheticModelProviders.getPluginFor(context).propertySpecifications(context);
-    }
-    return new ArrayList<>();
+      return syntheticModelProviders.getPluginFor(context)
+          .map(p  -> p.propertySpecifications(context))
+          .orElse(new ArrayList<>());
   }
 
   public PropertySpecification propertySpecification(ModelPropertyContext modelPropertyContext) {

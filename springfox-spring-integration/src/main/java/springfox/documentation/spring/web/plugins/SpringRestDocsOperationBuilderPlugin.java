@@ -37,7 +37,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
 import springfox.documentation.spi.service.contexts.OperationContext;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -111,7 +110,7 @@ public class SpringRestDocsOperationBuilderPlugin implements OperationBuilderPlu
 
   private Function<Resource, RawHttpResponse<Void>> toRawHttpResponse() {
     return resource -> {
-      try (InputStream resourceAsStream = new FileInputStream(resource.getFile())) {
+      try (InputStream resourceAsStream = resource.getInputStream()) {
         RawHttp rawHttp = new RawHttp();
         // must extract the body before the stream is closed
         return (RawHttpResponse<Void>) rawHttp.parseResponse(resourceAsStream).eagerly();
