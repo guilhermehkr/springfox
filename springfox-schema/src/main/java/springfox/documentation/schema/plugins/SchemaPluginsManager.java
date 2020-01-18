@@ -119,6 +119,9 @@ public class SchemaPluginsManager {
   }
 
   public PropertySpecification propertySpecification(ModelPropertyContext modelPropertyContext) {
-    return null;
+    for (ModelPropertyBuilderPlugin enricher : propertyEnrichers.getPluginsFor(modelPropertyContext.getDocumentationType())) {
+      enricher.apply(modelPropertyContext);
+    }
+    return modelPropertyContext.getSpecificationBuilder().build();
   }
 }
